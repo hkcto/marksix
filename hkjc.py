@@ -4,7 +4,7 @@ from marksix import markSix
 
 
 def run(playwright: Playwright, marksix: list, order=False) -> None:
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=True)
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://bet.hkjc.com/marksix/Single.aspx?lang=ch")
