@@ -9,9 +9,10 @@ import re
 
 class Record():
     def __init__(self) -> None:
-        self.last_30_draw = last30draw()
+        self.last_30_draw, self.last_30_detail = last30draw()
         self.next_draw_info = nextDrawInfo()
-    
+        # self.last_draw = lastDrawDetail()
+
 def last30draw():
     """更新六合彩結果到draw.json檔案中,返回 last30draw list"""
     
@@ -24,7 +25,15 @@ def last30draw():
         json.dump(r, f, ensure_ascii=False ,indent=1)
  
     #返回 last30draw list
-    return [i['no'] for i in r]
+    return [i['no'] for i in r], r
+
+# def lastDrawDetail():
+#     with open('draw.json', 'r', encoding='utf-8') as f:
+#         data = json.load(f)
+    
+#     return data[0]
+    
+
     
 def nextDrawInfo():
     header = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.76'}
@@ -34,11 +43,10 @@ def nextDrawInfo():
     date = re.search('[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]', single_page)
     return [draw.group(0), date.group(0)]
 
-
-
-
 if __name__=="__main__":
 
     record = Record()
-    draw_info = record.next_draw_info
-    print(draw_info)
+    # print(record.last_30_draw)
+    # print(lastDrawDetail())
+    print(record.last_30_detail)
+    
