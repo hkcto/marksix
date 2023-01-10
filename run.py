@@ -2,6 +2,10 @@ import datetime
 from record import Record
 import hkjc
 import argparse
+import os
+
+
+os.chdir(os.getcwd())
 
 # -------------- 命令行傳入參數區 ---------------------------
 parser = argparse.ArgumentParser(description='order hkjc marksix')
