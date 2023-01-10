@@ -1,7 +1,13 @@
 import datetime
 from record import Record
 import hkjc
-from marksix import markSix
+import argparse
+
+# -------------- 命令行傳入參數區 ---------------------------
+parser = argparse.ArgumentParser(description='order hkjc marksix')
+parser.add_argument('--order', action='store_true', help='order hkjc marksix')
+args = parser.parse_args()
+
 
 record = Record()
 next_draw_day = record.next_draw_info[1]
@@ -12,6 +18,9 @@ next_draw_day = datetime.date(int(year), int(month), int(day))
 today = datetime.date.today()
 
 
+
+
 if (today - next_draw_day).days == 0:
-    six = markSix()
-    hkjc.order(order=False)
+    hkjc.order(order=args.order)
+else:
+    print('離搞珠日還有:', today - next_draw_day)

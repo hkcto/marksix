@@ -45,8 +45,8 @@ def run(playwright: Playwright, marksix: list, order=False) -> None:
         page.click('//*[@id="previewSend"]') # 確定傳送 buttuon
         page.click('//*[@id="replyClose"]') #完成 buttuon
         print('己成功購買:', marksix)
-        # --------------------- send email ----------------------
         
+        # --------------------- send email ----------------------
         from gmailpy import Gmail
         from email.message import EmailMessage
         from datetime import datetime
@@ -58,7 +58,7 @@ def run(playwright: Playwright, marksix: list, order=False) -> None:
         message.set_content(f'日期: {datetime.today()}\n財運號碼: {marksix}\n結餘: {balance}')
         gmail.send(message)   
     else:
-        print('just test mode')
+        print('Test model')
     
     
     # page.pause()
