@@ -1,4 +1,4 @@
-from playwright.sync_api import Playwright, sync_playwright, expect
+from playwright.sync_api import Playwright, sync_playwright
 import config
 from marksix import markSix
 
@@ -46,17 +46,28 @@ def run(playwright: Playwright, marksix: list, order=False) -> None:
         page.click('//*[@id="replyClose"]') #完成 buttuon
         print('己成功購買:', marksix)
         
+        # ------------------------ 下期攪珠資訊 -----------------------
+        from record import Record
+        draw_info = Record().next_draw_info
+        
         # --------------------- send email ----------------------
         from gmailpy import Gmail
         from email.message import EmailMessage
-        from datetime import datetime
+        
         gmail = Gmail(username=config.gmail_login['username'], secret=config.gmail_login['secret'])
         message = EmailMessage()
         message['Subject'] = "MarkSix"
         message['From'] = 'HKJC'
         message['To'] = 'hkcto.com@gmail.com'
-        message.set_content(f'日期: {datetime.today()}\n財運號碼: {marksix}\n結餘: {balance}')
-        gmail.send(message)   
+        message.set_content(f'期數: {draw_info[0]}\n日期: {draw_info[1]}\n財運號碼: {marksix}\n結餘: {balance}')
+        gmail.send(message)
+        
+        # ------------ order log -----------------------
+        from record import Record
+        draw_info = Record().next_draw_info
+        with open('order.txt', 'a+', encoding='utf-8') as f:
+            log_data = {"id": draw_info[0], "date": draw_info[1], "no": marksix}
+            f.write(f'\n{log_data}')
     else:
         print('Test model')
     
@@ -67,6 +78,7 @@ def run(playwright: Playwright, marksix: list, order=False) -> None:
     browser.close()
 
 def order(order=False):
+    # 這個函數是為了給 run.py 調用
     with sync_playwright() as playwright:
         run(playwright, marksix=markSix(), order=order)
 
