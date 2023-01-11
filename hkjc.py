@@ -64,10 +64,11 @@ def run(playwright: Playwright, marksix: list, order=False) -> None:
         
         # ------------ order log -----------------------
         from record import Record
+        import json
         draw_info = Record().next_draw_info
-        with open('order.txt', 'a+', encoding='utf-8') as f:
-            log_data = {"id": draw_info[0], "date": draw_info[1], "no": marksix}
-            f.write(f'\n{log_data}')
+        with open('order.json', 'w', encoding='utf-8') as f:
+            order_draw = {"id": draw_info[0], "date": draw_info[1], "no": marksix}
+            f.write(json.dumps(order_draw))
     else:
         print('Test model')
     

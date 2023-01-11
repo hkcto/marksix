@@ -25,16 +25,27 @@ class Gmail():
                 print('Complete!')
             except Exception as e:
                 print(e)
-                
+
+
+    def sendCheck(self, content):
+        message = EmailMessage()
+        message['Subject'] = "MarkSix Checking"
+        message['From'] = 'HKJC'
+        message['To'] = 'hkcto.com@gmail.com'
+        message.set_content(content)         
+        self.send(message)
+        print("number check email complete!")
+
+
+
+
 
 if __name__=="__main__":
     import config
-    
-    print(config.gmail_login['secret'], config.gmail_login['username'])
     gmail = Gmail(username=config.gmail_login['username'], secret=config.gmail_login['secret'])
-    message = EmailMessage()
-    message['Subject'] = "MarkSix"
-    message['From'] = 'HKJC'
-    message['To'] = 'hkcto.com@gmail.com'
-    message.set_content(f'日期:\n財運號碼: \n結餘:')
-    gmail.send(message)  
+    # message = EmailMessage()
+    # message['Subject'] = "MarkSix"
+    # message['From'] = 'HKJC'
+    # message['To'] = 'hkcto.com@gmail.com'
+    # message.set_content(f'日期:\n財運號碼: \n結餘:')
+    gmail.sendCheck('六合彩核對測試Email')  
