@@ -4,8 +4,6 @@ import hkjc
 import argparse
 import os
 
-# ----------------- 調整python工作目錄--------------
-os.chdir(os.getcwd())
 
 # -------------- 命令行傳入參數區 ---------------------------
 parser = argparse.ArgumentParser(description='order hkjc marksix')
