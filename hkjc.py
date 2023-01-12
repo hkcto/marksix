@@ -52,15 +52,15 @@ def run(playwright: Playwright, marksix: list, order=False) -> None:
         
         # --------------------- send email ----------------------
         from gmailpy import Gmail
-        from email.message import EmailMessage
+        # from email.message import EmailMessage
         
         gmail = Gmail(username=config.gmail_login['username'], secret=config.gmail_login['secret'])
-        message = EmailMessage()
-        message['Subject'] = "MarkSix"
-        message['From'] = 'HKJC'
-        message['To'] = 'hkcto.com@gmail.com'
-        message.set_content(f'期數: {draw_info[0]}\n日期: {draw_info[1]}\n財運號碼: {marksix}\n結餘: {balance}')
-        gmail.send(message)
+        # message = EmailMessage()
+        # message['Subject'] = "MarkSix"
+        # message['From'] = 'HKJC'
+        # message['To'] = 'hkcto.com@gmail.com'
+        # message.set_content(f'期數: {draw_info[0]}\n日期: {draw_info[1]}\n財運號碼: {marksix}\n結餘: {balance}')
+        gmail.sendOrder(f'期數: {draw_info[0]}\n日期: {draw_info[1]}\n財運號碼: {marksix}\n結餘: {balance}')
         
         # ------------ order log -----------------------
         from record import Record
