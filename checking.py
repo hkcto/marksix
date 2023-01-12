@@ -18,7 +18,7 @@ gmail = Gmail(config.gmail_login['username'], config.gmail_login['secret'])
 
 # order_draw 己買的六合彩
 with open('order.json', 'r') as f:
-    order_draw = json.loads(f.readline())
+    order_draw = json.loads(f.read())
     
 def check(six):
     """在最後30期搞珠中核對號碼"""
@@ -28,10 +28,10 @@ def check(six):
             for n in six['no']:
                 if n in draw['no']:
                   check_draw.append(n)
-            gmail.sendCheck(f'{draw["id"]} 搞珠結果:{ draw["no"]}\n{six["id"]} 財運號碼: {six["no"]}\n{draw["id"]} 中奬號碼: {check_draw}') 
+            gmail.sendCheck(f'{draw["id"]} 搞珠結果:{ draw["no"]}\n{six["id"]} 財運號碼: {six["no"]}\n{draw["id"]} 中奬號碼: {check_draw}')
             break # 這個break在這裡的作用是,己找到了對應的六合彩期數,己沒有必要再往下找.
-
+    import os 
+    os.remove('order.json')
 
 if __name__=="__main__":
-    if (today - next_draw_day).days == 0:
-        check(order_draw)
+    check(order_draw)
