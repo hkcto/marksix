@@ -4,6 +4,13 @@ import datetime
 from gmailpy import Gmail
 import config
 
+# order_draw 己買的六合彩
+try:
+    with open('order.json', 'r') as f:
+        order_draw = json.loads(f.read())
+except FileNotFoundError:
+    print('沒有找到order.json記錄')
+    exit()
 
 record = Record()
 last_30_detail = record.last_30_detail
@@ -15,11 +22,6 @@ today = datetime.date.today()
 
 gmail = Gmail(config.gmail_login['username'], config.gmail_login['secret'])
 
-
-# order_draw 己買的六合彩
-with open('order.json', 'r') as f:
-    order_draw = json.loads(f.read())
-    
 def check(six):
     """在最後30期搞珠中核對號碼"""
     check_draw = []
