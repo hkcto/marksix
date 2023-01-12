@@ -17,6 +17,7 @@ def last30draw():
     """更新六合彩結果到draw.json檔案中,返回 last30draw list"""
     
     r = httpx.get(url="https://bet.hkjc.com/contentserver/jcbw/cmc/last30draw.json").json()
+    
     # ----- 保存last30draw.json ----------
     for i in range(len(r)):
         draw = r[i]['no']

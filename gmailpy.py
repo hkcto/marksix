@@ -10,11 +10,6 @@ class Gmail():
         self.secret = secret
 
     def send(self, msg: EmailMessage):
-        """message = EmailMessage()\n
-        message['Subject'] = "python Gmail"\n
-        message['From'] = 'gmailpy'\n
-        message['To'] = 'hkcto.com@gmail.com'\n
-        message.set_content('gmail hello world')"""
         
         with smtplib.SMTP(host='smtp.gmail.com', port=587) as smtp:
             try:
@@ -36,7 +31,14 @@ class Gmail():
         self.send(message)
         print("number check email complete!")
 
-
+    def sendOrder(self, content):
+        message = EmailMessage()
+        message['Subject'] = "MarkSix Order"
+        message['From'] = 'HKJC'
+        message['To'] = 'hkcto.com@gmail.com'
+        message.set_content(content)         
+        self.send(message)
+        print("marksix order")
 
 
 

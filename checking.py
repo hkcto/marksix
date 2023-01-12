@@ -29,12 +29,7 @@ def check(six):
                 if n in draw['no']:
                   check_draw.append(n)
             gmail.sendCheck(f'{draw["id"]} 搞珠結果:{ draw["no"]}\n{six["id"]} 財運號碼: {six["no"]}\n{draw["id"]} 中奬號碼: {check_draw}') 
-            # print(f'{draw["id"]} 搞珠結果:', draw['no'])
-            # print(f'{six["id"]} 財運號碼:', six['no'])
-            # print(f"{draw['id']} 中奬號碼:",check_draw)
             break # 這個break在這裡的作用是,己找到了對應的六合彩期數,己沒有必要再往下找.
-
-
 
 
 if __name__=="__main__":
