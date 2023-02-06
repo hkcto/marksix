@@ -5,6 +5,49 @@ from record import Record
 record = Record()
 last_30_draw = record.last_30_draw
 
+def oneShort(six):
+    
+    """欠一門"""
+    oneset = []
+    zero = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    ten = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    twenty = [20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+    thirty = [30, 31, 32, 33, 34, 35, 36, 37, 38, 39]
+    forty = [40, 41, 42, 43, 44, 45, 46, 47, 48, 49]
+    for number in six:
+        match number:
+            case number if number in zero:
+                oneset.append("zero")
+            case number if number in ten:
+                oneset.append("ten")
+            case number if number in twenty:
+                oneset.append("twenty")
+            case number if number in thirty:
+                oneset.append("thirty")
+            case number if number in forty:
+                oneset.append("forty")
+    oneset = set(oneset)
+    if len(oneset) >= 5:
+        return False
+    return True
+
+def oneAndlast(six, first=15, last=35):
+    """第一個號碼first 不能大於10, 最後一個號碼last不小於40"""
+    if six[0] > first:
+        return False
+    if six[5] < last:
+        return False
+    return True
+
+def sumNumber(six, min=90, max=210):
+    """財運號碼相加總和不小也不大"""
+    total = sum(six)
+    if total < min:
+        return False
+    if total > max:
+        return False
+    return True
+
 def rules(six):
     """財運號碼選擇規則"""
 
@@ -40,8 +83,9 @@ def rules(six):
     # -----------------------------------------------------
     
     # ----- 最後一個號碼不能小於30 -----
-    if six[5] < 30:
+    if oneAndlast(six=six) is False:
         return False
+
     # print('最後號碼大於30,PASS')
     #------------------------------
     
@@ -65,6 +109,14 @@ def rules(six):
     if len(even) | len(odd) == 0:
         return False
     # -------------------------------------------
+    
+    # 欠一門
+    if oneShort(six=six) is False:
+        return False
+    
+    ## six 加總
+    if sumNumber(six=six) is False:
+        return False
     
     
     return six

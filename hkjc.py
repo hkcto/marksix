@@ -5,7 +5,7 @@ from gmailpy import Gmail
 
 
 def run(playwright: Playwright, marksix: list, order=False) -> None:
-    browser = playwright.chromium.launch(headless=True)
+    browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://bet.hkjc.com/marksix/Single.aspx?lang=ch")
