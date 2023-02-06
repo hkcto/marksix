@@ -1,25 +1,15 @@
 import random
-import json
+from record import Record
 
 
-def last30draw():
-    """最後30期六合彩"""
-    with open('draw.json', encoding=('utf8')) as f:
-        drawData = f.read()
-        drawData: dict = json.loads(drawData)
-    
-    return [i['no'] for i in drawData]
+record = Record()
+last_30_draw = record.last_30_draw
 
 def rules(six):
     """財運號碼選擇規則"""
-    last30 = last30draw()
 
-    # # six 是否存在記錄中
-    # if six in last30:
-    #     return False
-    
     # 3個號碼(七獎)以上,不能在最後30期結果中
-    for draw in last30:
+    for draw in last_30_draw:
         three: list = []
         for i in six:
             if i in draw:
@@ -31,7 +21,7 @@ def rules(six):
     
     #---------- six 是否同時有3種顏色 ----------
     redList = [1, 2, 7, 8, 12, 13, 18, 19, 23, 24, 29, 30, 34, 35, 40, 45, 46]
-    blueList = [3, 4, 9, 10, 14, 15, 20, 25, 26,31, 36, 37, 41, 42, 47, 48]
+    # blueList = [3, 4, 9, 10, 14, 15, 20, 25, 26,31, 36, 37, 41, 42, 47, 48]
     greenList = [5, 6, 11, 16, 17, 21, 22, 27, 28, 32, 33, 38, 39, 43, 44, 49]
     red: list = []
     green: list = []

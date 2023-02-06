@@ -27,15 +27,7 @@ def last30draw():
  
     #返回 last30draw list
     return [i['no'] for i in r], r
-
-# def lastDrawDetail():
-#     with open('draw.json', 'r', encoding='utf-8') as f:
-#         data = json.load(f)
-    
-#     return data[0]
-    
-
-    
+   
 def nextDrawInfo():
     header = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.76'}
     with httpx.Client(headers=header) as client:

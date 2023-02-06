@@ -1,6 +1,7 @@
 from playwright.sync_api import Playwright, sync_playwright
 import config
 from marksix import markSix
+from gmailpy import Gmail
 
 
 def run(playwright: Playwright, marksix: list, order=False) -> None:
@@ -24,16 +25,21 @@ def run(playwright: Playwright, marksix: list, order=False) -> None:
     page.locator('//*[@id="pic_confirm"]').click() # ask button
     page.locator('//*[@id="disclaimerProceed"]').click() #條款及細則page
     
+    
+    # ----------------------- Email ----------------------------
+    gmail = Gmail(username=config.gmail_login['username'], secret=config.gmail_login['secret'])
+    
     # ---------- 結餘 ----------
-    balance = page.locator('//*[@id="valueAccBal"]').all_text_contents()[0]
-    print(balance)
-    balance = float(balance[6:])
+    balance_text = page.locator('//*[@id="valueAccBal"]').all_text_contents()[0]
+    print(balance_text)
+    balance = float(balance_text[6:])
     if balance < 10:    # 結餘小於$10就退出
+        gmail.sendBalance(balance_text)
         page.close()
         browser.close()
     
     
-    # ----- 選擇財運號碼 -----
+    # ------------------------------------- 選擇財運號碼 ---------------------------
     for i in marksix:
         page.click(selector=f'//*[@id="n{i}"]')
 
@@ -51,15 +57,9 @@ def run(playwright: Playwright, marksix: list, order=False) -> None:
         draw_info = Record().next_draw_info
         
         # --------------------- send email ----------------------
-        from gmailpy import Gmail
-        # from email.message import EmailMessage
-        
+
+        balance = page.locator('//*[@id="valueAccBal"]').all_text_contents()[0]
         gmail = Gmail(username=config.gmail_login['username'], secret=config.gmail_login['secret'])
-        # message = EmailMessage()
-        # message['Subject'] = "MarkSix"
-        # message['From'] = 'HKJC'
-        # message['To'] = 'hkcto.com@gmail.com'
-        # message.set_content(f'期數: {draw_info[0]}\n日期: {draw_info[1]}\n財運號碼: {marksix}\n結餘: {balance}')
         gmail.sendOrder(f'期數: {draw_info[0]}\n日期: {draw_info[1]}\n財運號碼: {marksix}\n結餘: {balance}')
         
         # ------------ order log -----------------------
@@ -70,9 +70,9 @@ def run(playwright: Playwright, marksix: list, order=False) -> None:
             order_draw = {"id": draw_info[0], "date": draw_info[1], "no": marksix}
             f.write(json.dumps(order_draw))
     else:
-        print('Test model')
+        print('Test Model')
     
-    
+    page.pause()
     # page.pause()
     # ---------------------
     context.close()
@@ -86,4 +86,4 @@ def order(order=False):
 if __name__=='__main__':
     
     with sync_playwright() as playwright:
-        run(playwright, marksix=markSix())
+        run(playwright, marksix=markSix(),order=False)

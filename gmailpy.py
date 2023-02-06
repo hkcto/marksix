@@ -29,7 +29,7 @@ class Gmail():
         message['To'] = 'hkcto.com@gmail.com'
         message.set_content(content)         
         self.send(message)
-        print("number check email complete!")
+        print("marksix check email complete!")
 
     def sendOrder(self, content):
         message = EmailMessage()
@@ -39,6 +39,14 @@ class Gmail():
         message.set_content(content)         
         self.send(message)
         print("marksix order")
+    
+    def sendBalance(self, content):
+        message = EmailMessage()
+        message['Subject'] = "MarkSix Balance"
+        message['From'] = 'pymarksix'
+        message['To'] = 'hkcto.com@gmail.com'
+        message.set_content(content)
+        print(f'{content}')     
 
 
 
