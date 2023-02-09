@@ -4,8 +4,8 @@ from marksix import markSix
 from gmailpy import Gmail
 
 
-def run(playwright: Playwright, marksix: list, order=False) -> None:
-    browser = playwright.chromium.launch(headless=False)
+def run(playwright: Playwright, marksix: list, order=False, headless=True) -> None:
+    browser = playwright.chromium.launch(headless=headless)
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://bet.hkjc.com/marksix/Single.aspx?lang=ch")
@@ -86,4 +86,4 @@ def order(order=False):
 if __name__=='__main__':
     
     with sync_playwright() as playwright:
-        run(playwright, marksix=markSix(),order=False)
+        run(playwright, marksix=markSix(),order=False, headless=False)
