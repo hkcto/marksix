@@ -4,6 +4,7 @@ from marksix import markSix
 from gmailpy import Gmail
 
 
+
 def run(playwright: Playwright, marksix: list, order=False, headless=True) -> None:
     browser = playwright.chromium.launch(headless=headless)
     context = browser.new_context()
@@ -71,17 +72,17 @@ def run(playwright: Playwright, marksix: list, order=False, headless=True) -> No
             f.write(json.dumps(order_draw))
     else:
         print('Test Model')
+        page.pause()
     
-    page.pause()
     # page.pause()
     # ---------------------
     context.close()
     browser.close()
 
-def order(order=False):
+def order(order=False, headless=True):
     # 這個函數是為了給 run.py 調用
     with sync_playwright() as playwright:
-        run(playwright, marksix=markSix(), order=order)
+        run(playwright, marksix=markSix(), order=order, headless=headless)
 
 if __name__=='__main__':
     
