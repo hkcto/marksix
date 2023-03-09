@@ -17,7 +17,7 @@ def run(playwright: Playwright, marksix: list, order=False, headless=True) -> No
     page.locator('//*[@id="passwordInput1"]').type(config.hkjc['password']) # 輸入密碼
     page.locator('//*[@id="loginButton"]').click() # 登入button
     # ------------登入HKJC: 回答問題 -----------------
-    # page.wait_for_selector('//*[@id="ekbaSeqQuestion"]', strict=True)
+    page.wait_for_selector('//*[@id="ekbaSeqQuestion"]', strict=True)
     question = page.locator('//*[@id="ekbaSeqQuestion"]').text_content() #登入 Question
     print("Question:", question)
     ask = config.hkjc[f'{question}']
