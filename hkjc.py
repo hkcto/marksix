@@ -7,15 +7,16 @@ from gmailpy import Gmail
 
 def run(playwright: Playwright, marksix: list, order=False, headless=True) -> None:
     browser = playwright.chromium.launch(headless=headless)
+    # context = browser.new_context()
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://bet.hkjc.com/marksix/Single.aspx?lang=ch")
     
     # ------------------------ 登入HKJC: Account and Password --------------------------
-    page.locator('//*[@id="account"]').click() #登入名稱輸入框
-    page.locator('//*[@id="account"]').fill(config.hkjc['username']) #輸入用戶名
-    page.locator('//*[@id="passwordInput1"]').type(config.hkjc['password']) # 輸入密碼
-    page.locator('//*[@id="loginButton"]').click() # 登入button
+    page.wait_for_selector('//*[@id="account"]').click() #登入名稱輸入框
+    page.wait_for_selector('//*[@id="account"]').fill(config.hkjc['username']) #輸入用戶名
+    page.wait_for_selector('//*[@id="passwordInput1"]').type(config.hkjc['password']) # 輸入密碼
+    page.wait_for_selector('//*[@id="loginButton"]').click() # 登入button
     # ------------登入HKJC: 回答問題 -----------------
     page.screenshot(path='login.png', full_page=True)
     page.wait_for_selector('//*[@id="ekbaSeqQuestion"]', strict=True)
@@ -23,9 +24,9 @@ def run(playwright: Playwright, marksix: list, order=False, headless=True) -> No
     print("Question:", question)
     ask = config.hkjc[f'{question}']
     print("ask:", ask)
-    page.locator('//*[@id="ekbaDivInput"]').type(ask)
-    page.locator('//*[@id="pic_confirm"]').click() # ask button
-    page.locator('//*[@id="disclaimerProceed"]').click() #條款及細則page
+    page.wait_for_selector('//*[@id="ekbaDivInput"]').type(ask)
+    page.wait_for_selector('//*[@id="pic_confirm"]').click() # ask button
+    page.wait_for_selector('//*[@id="disclaimerProceed"]').click() #條款及細則page
     
     
     # ----------------------- Email ----------------------------
