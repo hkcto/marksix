@@ -1,1 +1,3 @@
-print(sum([1,2,3]))
+import os
+
+os.chdir(os.getcwd())

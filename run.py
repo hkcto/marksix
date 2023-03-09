@@ -1,3 +1,5 @@
+import os
+os.chdir(os.getcwd())
 import datetime
 from record import Record
 import hkjc
