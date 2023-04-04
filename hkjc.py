@@ -81,7 +81,7 @@ def run(playwright: Playwright, marksix: list, order=False, headless=True) -> No
     context.close()
     browser.close()
 
-def order(order=False, headless=True):
+<!-- def order(order=False, headless=True): -->
     # 這個函數是為了給 run.py 調用
     with sync_playwright() as playwright:
         run(playwright, marksix=markSix(), order=order, headless=headless)
@@ -89,4 +89,4 @@ def order(order=False, headless=True):
 if __name__=='__main__':
     
     with sync_playwright() as playwright:
-        run(playwright, marksix=markSix(),order=False, headless=False)
+        run(playwright, marksix=markSix(),order=True, headless=False)
